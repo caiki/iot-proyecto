@@ -1,0 +1,588 @@
+/*------------------------------
+ * Copyright 2014 Pixelized
+ * http://www.pixelized.cz
+ *
+ * Sitename Billboard - the coming soon theme
+ * version 1.0
+------------------------------*/
+
+/*------------------------------
+	MAIN
+------------------------------*/
+
+body {
+	font-family: 'font', sans-serif;
+	padding-top:30px;
+}	
+
+h1 {display:none;}	
+h2,
+h3,
+h4,
+h5 {
+	font-family:'Source Sans Pro';
+}
+
+a{color:#FFFFFF;}
+a:focus,
+a:hover {
+	outline:0 none;
+	text-decoration:none;
+	transition-duration:1s;
+}
+
+p {	
+	font-family:'Source Sans Pro';
+	color:#FFF;
+	font-weight:300;
+	font-size:24px;
+}
+
+h2 {
+	color:#FFF;
+	font-size:80px;
+	font-weight:100;
+}
+
+.btn {
+	font-family:'Source Sans Pro';
+	color:#FFF;
+	font-size:16px;
+}
+
+.btn-primary{
+	padding:10px 20px 10px 20px;
+	background-color:transparent;
+	border-bottom:1px solid #FFF;
+ 	border-top:1px solid #FFF;
+	border-right:1px solid #FFF;
+	border-left:1px solid #FFF;
+}
+
+.btn-primary:hover{
+	transition-duration:1s;
+	background-color:rgba(0,0,0,0.4);
+	border-bottom:1px solid #FFF;
+ 	border-top:1px solid #FFF;
+	border-right:1px solid #FFF;
+	border-left:1px solid #FFF;	
+}
+
+/*------------------------------
+	CONTENT
+------------------------------*/
+
+
+#text {
+	text-align:center;
+	padding:0 0 20px 0;
+}
+
+.highlight {
+	font-weight:400;
+}
+
+.line {
+    display: block;
+    margin: 28px 0;
+    position: relative;
+    text-align: center;
+}
+
+.line h3{
+	color:#FFF;
+	font-weight:100;
+	font-size:40px;
+}
+
+.line:before, .line:after {
+    -moz-box-sizing: border-box;
+    background: none repeat scroll 0 0 rgba(255, 255, 255, 0.9);
+    content: "";
+    height: 1px;
+    max-width: 400px;
+    position: absolute;
+    top: 25px;
+    width: 45%;
+}
+
+.line:before {
+    left: 0;
+}
+
+.line:after {
+    right: 0;
+}
+/*------------------------------
+	COUNTDOWN
+------------------------------*/
+
+#DateCountdown {
+	width: 500px;
+	height: 125px;
+	color:#FFF;
+	margin:0 auto;
+}
+
+/*------------------------------
+	FOOTER NAVBAR
+------------------------------*/
+
+.navbar-default {
+	padding-top:10px;
+	border-width:0px;
+	background-color:rgba(0,0,0,0.3);
+	text-align:center;
+	color:#FFF;
+}
+
+.navbar-default .navbar-brand {
+	font-family:'Source Sans Pro';
+	color:#FFF;
+}
+
+.navbar-default .navbar-nav > li > a{
+    color:#FFF;
+	font-size:18px;
+	font-weight:400;
+	font-family:'Source Sans Pro';
+}
+
+.navbar-default .navbar-nav > li > a:before {
+    color: rgba(255, 255, 255, 0);
+	bottom:4px;
+    content: "─";
+    left: 42%;
+    position: absolute;
+    text-shadow: 0 0 rgba(255, 255, 255, 0);
+}
+
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+	color:#FFF;
+}
+
+
+
+.navbar-default .navbar-nav > li > a:hover:before {
+	color: #FFFFFF;
+	text-shadow: 10px 0 #FFFFFF, -10px 0 #FFFFFF;
+	transition-duration:0.5s;
+}
+
+.navbar-default .navbar-collapse {
+    border-color:#FFF;
+    /*
+	padding-top:30px;*/
+}
+
+.brands > li > a {
+	background-color:transparent;
+	border-radius:60px;
+	border:1px solid transparent;
+	color:#FFFFFF;
+}
+
+.brands > li > a:hover {
+	color:#FFFFFF;
+	transition-duration:1s;
+	border-radius:60px;
+	border:1px solid #FFF;
+}
+/*------------------------------
+	MODAL
+------------------------------*/
+.modal-dialog {
+	width:100%;
+	position:absolute;
+	top:-30px;
+	text-align:center;
+	background-color:#00695C;
+	/*background-color:#004D40;
+	opacity: 0.95;
+	background-image:url('../bg/thumbs_bg.png');*/
+	padding-bottom:30px;
+}
+
+.modal {
+	overflow: hidden;
+}
+
+.modal img {
+	margin:0 auto 0 auto;
+}
+
+.modal p{
+	font-weight:200;
+	font-size:18px;
+}
+
+#map-canvas {
+  	height: 350px;
+  	margin: 0;
+  	padding: 0;
+}
+
+.modal h3 {
+	font-size:46px;
+	font-weight:200;
+	color:#FFF;
+	padding-bottom:10px;
+}
+
+.modal h4 {
+	font-size:24px;
+	font-weight:200;
+	color:#FFF;
+}
+
+.form-group {
+	line-height:50px;
+}
+
+.subscribe-wrap {
+	padding-top:36px;
+}
+
+.form-inline .form-control {
+	backgroung-color:#FFF;
+	width:100%;
+	height:36px;
+	box-shadow:none;
+}
+
+form .form-inline {
+	backgroung-color:#FFF;
+	width:300px;
+	height:38px;
+	box-shadow:none;
+}
+
+.form-control:focus {
+	border-color:#FFF;
+	box-shadow:none;
+}
+
+.form-control::-moz-placeholder{
+	color:#FFF;
+}
+
+button.close {
+	font-size:36px;
+}
+
+.btn-submit{
+	background-color:transparent;
+	border-bottom:1px solid #FFF;
+ 	border-top:1px solid #FFF;
+	border-right:1px solid #FFF;
+	border-left:1px solid #FFF;
+}
+
+.btn-submit:hover{
+	transition-duration:1s;
+	background-color:#FFF;
+	border-bottom:1px solid #FFF;
+ 	border-top:1px solid #FFF;
+	border-right:1px solid #FFF;
+	border-left:1px solid #FFF;
+}
+
+.modal address {
+	color:#FFF;
+}
+
+address {
+	font-family:'Source Sans Pro';
+	text-align:left;
+	font-size:18px;
+	font-weight:300;
+}
+
+address a {
+	text-decoration:underline;
+}
+
+address a:hover {
+	color:#FFFFFF;
+	text-decoration:none;
+}
+
+
+/*------------------------------
+	MEDIUM DEVICES
+------------------------------*/
+
+@media (min-width:992px) and (max-width:1199px) {
+
+	.line:before, .line:after {
+		max-width:300px;
+	}
+	
+	.time_circles {
+		margin-bottom:24%;
+	}
+
+}
+
+/*------------------------------
+	SMALL DEVICES
+------------------------------*/
+
+@media (min-width:768px) and (max-width:992px) {
+
+	.line:before, .line:after {
+		max-width:200px;
+	}
+	
+	.time_circles {
+		margin-bottom:20%;
+	}
+	
+	.navbar-default .navbar-nav > li > a{
+		font-size:15px;
+	}
+
+}
+
+/*------------------------------
+	EXTRA SMALL DEVICES
+------------------------------*/
+
+@media (min-width:481px) and (max-width:767px) {
+	
+	.line:before, .line:after {
+		max-width:200px;
+	}
+	.text {
+		padding:0 0 0 0;
+	}
+	#DateCountdown {
+		width: 450px;
+	}
+	
+	address {
+		padding-top: 15px;
+	}
+
+	.time_circles {
+		margin-bottom:22%;
+	}
+	
+	.btn-primary:hover{
+		transition-duration:1s;
+		background-color:transparent;
+		border-bottom:1px solid #FFF;
+		border-top:1px solid #FFF;
+		border-right:1px solid #FFF;
+		border-left:1px solid #FFF;	
+	}
+
+	.modal {
+		overflow:auto;
+	}
+	
+	.modal-dialog {
+		margin:0;
+	}
+	
+	form  {
+		margin-top:15px;
+	}
+	
+	.navbar-default .navbar-nav > li > a:hover:before {
+		color: transparent;
+		text-shadow:none;
+		transition-duration:0.5s;
+	}
+	
+	.navbar-default {
+		background-color:rgba(0,0,0,0.6);
+	}
+	
+	.navbar-default .navbar-collapse {
+		background-color:rgba(0,0,0,0.6);
+	}
+	
+	.brands > li > a {
+		background-color:transparent;
+		border-radius:60px;
+		border:1px solid #FFFFFF;
+		color:#FFFFFF;
+	}
+
+}
+
+/*------------------------------
+	Phones with 600px width
+------------------------------*/
+
+@media (max-width:600px) {
+
+	.line:before, .line:after {
+		max-width:110px;
+	}
+	
+	
+
+
+}
+
+/*------------------------------
+	Phones with 548px width
+------------------------------*/
+
+@media (max-width:548px) {
+
+	.line:before, .line:after {
+		max-width:90px;
+	}
+
+	.form-inline .form-control {
+	    float:left;	
+		width:250px;
+	}
+
+}
+
+/*------------------------------
+	Phones with 480px width
+------------------------------*/
+
+@media (min-width:321px) and (max-width:480px) {
+	
+	.form-inline .form-control {
+	    float:left;	
+		width:250px;
+	}
+
+	.line:before, .line:after {
+		height: 0px;
+	}
+	
+	.text {
+		padding:0 0 0 0;
+	}
+	
+	#DateCountdown {
+		width: 350px;
+	}
+	
+	address {
+		padding-top: 15px;
+	}
+	
+	.time_circles {
+		margin-bottom:22%;
+	}
+	
+	.btn-primary:hover {
+		transition-duration:1s;
+		background-color:transparent;
+		border-bottom:1px solid #FFF;
+		border-top:1px solid #FFF;
+		border-right:1px solid #FFF;
+		border-left:1px solid #FFF;	
+	}
+	
+	.modal {
+		overflow:auto;
+	}
+	
+	.modal-dialog {
+		margin:0;
+	}
+	
+	.navbar-default .navbar-nav > li > a:hover:before {
+		color: transparent;
+		text-shadow:none;
+		transition-duration:0.5s;
+	}
+	
+	.navbar-default {
+		background-color:rgba(0,0,0,0.6);
+	}
+	
+	.navbar-default .navbar-collapse {
+		background-color:rgba(0,0,0,0.6);
+	}
+	
+	.brands > li > a {
+		background-color:transparent;
+		border-radius:60px;
+		border:1px solid #FFFFFF;
+		color:#FFFFFF;
+	}
+}
+
+/*------------------------------
+	Phones with 320px width
+------------------------------*/
+
+@media (max-width:320px) {
+	
+	.text {
+		padding:0 0 0 0;
+	}
+	
+	address {
+		padding-top: 15px;
+	}
+	
+	#DateCountdown {
+		width: 200px;
+	}
+	
+	.time_circles {
+		margin-bottom:20%;
+	}
+	
+	.btn-primary:hover{
+		transition-duration:1s;
+		background-color:transparent;
+		border-bottom:1px solid #FFF;
+		border-top:1px solid #FFF;
+		border-right:1px solid #FFF;
+		border-left:1px solid #FFF;	
+	}
+	
+	.modal {
+		overflow:auto;
+	}
+	
+	.modal-dialog {
+	  	margin:0;
+	}
+	
+	.form-inline .form-control {
+		width:200px;
+		margin-bottom:15px;
+	}
+
+	
+	.navbar-default {
+		background-color:rgba(0,0,0,0.6);
+	}
+	
+	.navbar-default .navbar-nav > li > a:hover:before {
+		color: transparent;
+		text-shadow:none;
+		transition-duration:0.5s;
+	}
+	
+	.navbar-default .navbar-collapse {
+		background-color:rgba(0,0,0,0.6);
+	}
+	
+	.brands > li > a {
+		background-color:transparent;
+		border-radius:60px;
+		border:1px solid #FFFFFF;
+		color:#FFFFFF;
+	}
+	
+	.line:before, .line:after {
+		height: 0px;
+	}
+}
+

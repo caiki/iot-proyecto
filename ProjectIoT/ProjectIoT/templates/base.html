@@ -1,0 +1,122 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
+<meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>
+      {% block titulo %}  
+      {% endblock titulo %}
+    </title>
+
+     <!-- Bootstrap core CSS -->
+    <link href="{% static 'Bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- Documentation extras -->
+    <link href="{% static 'Bootstrap/css/bootstrap-datetimepicker.css' %}" rel="stylesheet">
+    <link href="{% static 'Bootstrap/css/sweet-alert.css' %}" rel="stylesheet">
+    <!--[if lt IE 9]><script src="../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="{% static 'Bootstrap/js/jquery-1.11.3.min.js' %}"></script>
+    <link href="{% static 'Bootstrap/css/jquery-ui.css' %}" rel="stylesheet">
+    <script src="{% static 'Bootstrap/js/jquery-ui.js' %}"></script>
+    <!-- Favicons -->
+    <link data-jsfiddle="common" href="{% static 'Handson/css/pikaday.css' %}" rel="stylesheet">
+    <script data-jsfiddle="common" src="{% static 'Handson/js/pikaday.js' %}"></script>
+    <script data-jsfiddle="common" src="{% static 'Handson/js/moment.js' %}"></script>
+    <script data-jsfiddle="common" src="{% static 'Handson/js/ZeroClipboard.js' %}"></script>
+    <script data-jsfiddle="common" src="{% static 'Handson/js/handsontable.js' %}"></script>
+    <!--<link data-jsfiddle="common" href="{% static 'Handson/css/handsontable.bootstrap.css' %}" rel="stylesheet">-->
+    <link data-jsfiddle="common" href="{% static 'Handson/css/handsontable.css' %}" rel="stylesheet">
+</head>
+<body class="bs-docs-home">
+    <!-- Docs master nav -->
+    <header class="navbar navbar-fixed-top navbar-inverse" id="top" role="banner">
+      <div class="container">
+        <div class="navbar-header">
+          <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="/Bienvenida/" class="navbar-brand">{{ grifo }}</a>
+        </div>
+        <nav class="collapse navbar-collapse bs-navbar-collapse">
+          <ul class="nav navbar-nav navbar-left" >
+            <li >
+
+              <li  id="navDepo"><a href="/heart/">DADOS CORAÇÃO</a></li>
+
+            <!--<li  id="navGrifo">
+              <a href="/Mantenimientos_grifo/">ADMINISTRACION</a>
+            </li>-->
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown" id="navuser">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> {{ user.get_username }} <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <!--
+                <li id="navPerfil"><a href="#">Perfil</a></li>
+                <li id="navCamCont"><a href="#">Cambiar Contraseña</a></li>
+                -->
+                <li class="divider"></li>
+                <li><a href="/cerrar/">Cerrar Sesion</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    {% block content1 %}
+    {% endblock content1 %}
+<footer class="bs-docs-footer" role="contentinfo">
+  <div class="container" align="center">
+    Copyright © 2017 Todos los derechos reservados
+    {{ fail }}
+  </div>
+</footer>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <!--<script src="{% static 'Bootstrap/js/jquery.min.js' %}"></script>-->
+    <script src="{% static 'Bootstrap/js/Moment.js' %}"></script>
+    <script src="{% static 'Bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'Bootstrap/js/bootstrap-datetimepicker.js' %}"></script>
+    <!--<script src="{% static 'Bootstrap/js/docs.min.js' %}"></script>-->
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="{% static 'selectize/css/selectize.bootstrap3.css' %}" rel="stylesheet"/> 
+    <script src="{% static 'selectize/js/standalone/selectize.min.js' %}"></script>
+    <script src="{% static 'Bootstrap/js/validator.js' %}"></script>
+    <script src="{% static 'Bootstrap/js/jquery.numeric.js' %}"></script>
+    <script src="{% static 'Bootstrap/js/sweet-alert.js' %}"></script>
+    <!--<link href="{% static 'Bootstrap/css/tema.css' %}" rel="stylesheet">-->
+    {% block script %}
+    {% endblock script %}
+</body>
+<style type="text/css">
+    .navbar-inverse .navbar-brand {
+        color: #FE7E3E;
+        background-color: #2C1A0C;
+    }
+    .navbar-inverse {
+      background-color: #D84315;
+      border-color: #D84315;
+      color: #FFF;
+    }
+  .navbar-inverse .navbar-nav>li>a {
+        color: #FFF;
+    }
+    .navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:focus, .navbar-inverse .navbar-nav>.active>a:hover {
+    /*color: #fff;
+    background-color: #080808;*/
+    background-color: #BF360C;
+
+    }
+      .navbar-inverse .navbar-nav>.open>a, .navbar-inverse .navbar-nav>.open>a:focus, .navbar-inverse .navbar-nav>.open>a:hover {
+      color: #fff;
+      background-color: #BF360C;
+  }
+</style>
+<!-- Mirrored from getbootstrap.com/ by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 31 May 2015 05:08:18 GMT -->
+</html>

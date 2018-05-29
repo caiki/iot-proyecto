@@ -1,0 +1,431 @@
+{% extends "base.html" %}
+{% load static %}
+{% block titulo %}
+  .::Depositos
+{% endblock titulo %}
+{% block content1 %} 
+<script type="text/javascript">
+  $("#navdepositos").attr('class','active');
+</script>
+<div class="container">
+  <br><br><br>
+  <div class="row" id="Result">
+  {% ifnotequal resultado '' %}
+    {% ifequal resultado 'exito' %}
+      <div class="alert alert-success" role="alert" align="center">
+        <h4>OPERACION EXITOSA!!</h4>
+      </div>
+    {% else %}
+      <div class="alert alert-danger" role="alert" align="center">
+        <h4>FALLO OPERACION :( {{resultado}}</h4>
+      </div>
+    {% endifequal %}
+  {% endifnotequal %}
+  </div>
+  <div class="row">
+    <div class="col-md-12 col-sm-12" >
+        <div class="panel panel-default">
+          <div class="panel-heading"> <h4>FREQUÊNCIAS CARDÍACAS</h4><span>Reporte[{{pkR}}]: {{ RfI }} {{ RfF }} | Administrador: {{admin}} 
+          </span></div>
+          <div class="panel-body">
+            <div class="row" >
+              <h4 class="bg-success" align="center" id="ExitoCambiar">
+              </h4>
+            </div>
+            <div class="row">
+            <div class="col-md-12">  
+              <div class="col-md-2 col-md-offset-1">
+                <button type="button" class="btn btn-primary btn-block" id="btnRefrescar"><span class="fa fa-refresh"></span> Actualizar</button>
+              </div>
+<!--
+              <div class="col-md-2 ">
+                <button type="button" class="btn btn-block btn-success" data-toggle="modal" data-target="#ModalDeposito"><i class="fa fa-lg fa-money"></i>Nuevo Deposito</button>
+              </div>
+
+             <div class="col-md-2 col-md-offset-5" align="right">
+                <a href="/ImprimirReporte/" class="btn btn-warning" type="button">Vista Preliminar</a>
+              </div>
+-->   
+            </div>
+            </div>
+            <br>
+            <div class="row">
+              <p class="bg-success">
+                &nbsp;
+              </p>
+              <div class="col-md-12">
+                  <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                          <tr>
+                            <th>DATETIME</th>
+                            <th>BEAT</th>
+                          </tr>
+                        </thead>
+                        <tbody id="listaC">
+                            
+                        </tbody>
+                    </table>
+                  </div>
+              </div>
+              
+            </div>
+            <br>
+            <div class="row">
+              <div class="col-md-2 col-md-offset-8">
+                <a href="/Pagos/" class="btn btn-primary btn-block" type="button">Siguiente</a>
+              </div>
+            </div>
+            <br>
+
+            <div class="row">
+              <div class="col-md-10 col-md-offset-1" align="center">
+                <nav>
+                  <ul class="pagination">
+                    <li>
+                      <a href="#" id="ant" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                      </a>
+                    </li>
+                    <li class="active pag" ><a id="pg1" href="#">1</a></li>
+                    <li class="pag" ><a id="pg2" href="#" >2</a></li>
+                    <li class="pag" ><a id="pg3" href="#">3</a></li>
+                    <li class="pag" ><a id="pg4" href="#">4</a></li>
+                    <li class="pag" ><a id="pg5" href="#">5</a></li>
+                    <li >
+                      <a href="#" id="pos" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                      </a>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div> 
+</div>
+<div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Modificar Deposito</h4>
+      </div>
+      <div class="modal-body">
+            <div class="row">
+              <div class="col-md-12" id="panel-compra">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="row">
+                          <div class="col-md-12" >
+                            <p class="bg-success">
+                            Detalles de la Deposito
+                            </p>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-2 col-md-offset-8">
+                            <input type="text" class="form-control" id="actPkDeposito" readonly="readonly">
+                            <p></p>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-8 col-md-offset-2">
+                            <div class="form-group">
+                              <label class="control-label" for="actnroBoucher">Numero de Boucher:</label>
+                              <div class="input-group">
+                                <span class="input-group-addon">N°&nbsp;&nbsp;</span>
+                                <input type="text" class="form-control" id="actnroBoucher">
+                              </div>
+                            </div>
+                          </div>
+                       </div>
+                      <div class="row">
+                          <div class="col-md-8 col-md-offset-2">
+                            <div class="form-group">
+                              <label class="control-label" for="actconcepto">Concepto:</label>
+                              <input type="text" class="form-control" name="concepto" id="actconcepto">
+                              <div class="form-control-feedback" style="text-align:left; top: 25px;right: 5px;" ></div>
+                              <div class="help-block with-errors"></div>
+                            </div>
+                          </div>
+                        </div>
+
+
+                        <!--
+                        <div class="row">
+                          <div class="col-md-8 col-md-offset-2">
+                            <div class="form-group">
+                              <label class="control-label" for="obs">Observaciones:</label>
+                              <textarea class="form-control" rows="3" placeholder="OBSERVACIONES" name="obs" id="obs" style="font-size:16px;font-weight:bold;"></textarea >
+                              <div class="form-control-feedback" style="text-align:left; top: 25px;right: 5px;" ></div>
+                              <div class="help-block with-errors"></div>
+                            </div>
+                          </div>
+                        </div>
+                        -->    
+                    </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 col-md-offset-4">
+                <button class="btn btn-danger btn-block" type="button" id="btn_eliminar">Eliminar</button>
+              </div>
+            </div>
+        </div>
+      <div class="modal-footer">
+
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div>
+<div id="ModalDeposito" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" id="modal_formulario">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Detalles</h4>
+        </div>
+        <div class="modal-body">
+          <form action="/Depositos/" method="POST" data-toggle="validator" role="form" id="formulario">
+            {% csrf_token %}
+            <div class="row">
+              <div class="col-md-12" id="panel-compra">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="row">
+                          <div class="col-md-12" >
+
+                          <p class="bg-success">
+                          Detalles de Deposito
+                          </p>
+                          
+                        </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-2 col-md-offset-8">
+                            <input type="text" class="form-control" name="pkReporte" value="{{ pkR }}" readonly="readonly">
+                            <p></p>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-8 col-md-offset-2">
+                            <div class="form-group">
+                              <label class="control-label" for="txtnroBoucher">Numero de Boucher:</label>
+                              <div class="input-group">
+                                <span class="input-group-addon">N°&nbsp;&nbsp;</span>
+                                <input type="text" class="form-control" id="txtnroBoucher" name="nroBoucher" required>
+                              </div>
+                              
+                              <div class="form-control-feedback" style="text-align:left; top: 25px;right: 5px;" ></div>
+                              <div class="help-block with-errors"></div>
+                            </div>
+                          </div>
+                       </div>
+            
+                       <div class="row">
+                          <div class="col-md-8 col-md-offset-2">
+                            <div class="form-group">
+                              <label class="control-label" for="actconcepto">Concepto:</label>
+                              <input type="text" class="form-control" name="concepto" id="actconcepto">
+                              <div class="form-control-feedback" style="text-align:left; top: 25px;right: 5px;" ></div>
+                              <div class="help-block with-errors"></div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col-md-8 col-md-offset-2">
+                            <div class="form-group">
+                              <label class="control-label" for="txtamortizacion">Monto Deposito:</label>
+                              <div class="input-group">
+                                <span class="input-group-addon">S/.&nbsp;&nbsp;</span>
+                                <input type="text" class="form-control" id="txtamortizacion" name="deposito" required>
+                              </div>
+                              
+                              <div class="form-control-feedback" style="text-align:left; top: 25px;right: 5px;" ></div>
+                              <div class="help-block with-errors"></div>
+                            </div>
+                          </div>
+                       </div>  
+                       <!-- 
+                       <div class="row">
+                          <div class="col-md-8 col-md-offset-2">
+                            <div class="form-group">
+                              <label class="control-label" for="obs">Observaciones:</label>
+                              <textarea class="form-control" rows="3" placeholder="OBSERVACIONES" name="obs" id="obs" style="font-size:16px;font-weight:bold;"></textarea >
+                              <div class="form-control-feedback" style="text-align:left; top: 25px;right: 5px;" ></div>
+                              <div class="help-block with-errors"></div>
+                            </div>
+                          </div>
+                        </div>
+                        -->  
+                    </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 col-md-offset-4">
+                <button class="btn btn-success btn-block" type="submit" id="btn_guardar">Guardar</button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+<script type="text/javascript">
+  var Aux="";
+  var filaI =0;
+  var pagina=1;
+  var aux_tipoCambio="";
+  $(document).ready(function () {
+    $('input').on('keypress', function(e){
+      if(e.keyCode == 13){
+          var inputs = $(this).parents("form").eq(0).find(":input.form-control");
+          var idx = inputs.index($(this));
+          if (idx == inputs.length - 1) {
+              inputs[0].select()
+          } 
+          else {
+            inputs[idx + 1].focus(); //  handles submit buttons
+            //inputs[idx + 1].select();
+          }
+        return false;
+      }
+    });
+    $(".mayuscula").keyup(function(){
+      var valor= $(this).val().toUpperCase();
+      $(this).prop('value',valor);
+    });
+
+    $('#txtamortizacion').numeric(".");
+    //$('#txtnroBoucher').numeric();
+    //paginacion
+     $(".pag").click(function(){
+        $(".pag").attr('class','pag');
+        $(this).attr('class','active pag');
+        pagina = $(this).text();
+        ajax_Compras();
+      })
+      $("#ant").click(function(){
+        var pag = $("#pg1").text();
+        pag= parseInt(pag);
+        if(pag>1){
+          $("#pg1").text(pag-1);
+          pag= $("#pg2").text();
+          pag= parseInt(pag);
+          $("#pg2").text(pag-1);
+           pag= $("#pg3").text();
+          pag= parseInt(pag);
+          $("#pg3").text(pag-1);
+           pag= $("#pg4").text();
+          pag= parseInt(pag);
+          $("#pg4").text(pag-1);
+           pag= $("#pg5").text();
+          pag= parseInt(pag);
+          $("#pg5").text(pag-1);
+        }
+      });
+      $("#pos").click(function(){
+        var pag = $("#pg1").text();
+        pag= parseInt(pag);
+        $("#pg1").text(pag+1);
+        pag = $("#pg2").text();
+        pag= parseInt(pag);
+        $("#pg2").text(pag+1);
+        pag = $("#pg3").text();
+        pag= parseInt(pag);
+        $("#pg3").text(pag+1);
+        pag = $("#pg4").text();
+        pag= parseInt(pag);
+        $("#pg4").text(pag+1);
+        pag = $("#pg5").text();
+        pag= parseInt(pag);
+        $("#pg5").text(pag+1);
+      });
+    $(document).on("click",".filaC",function(){
+      var num = $(this).attr('id');
+      filaI = num;
+      var fila= $(this).attr('class');
+      $("."+fila).attr('class','filaC');
+      $("#"+num).attr('class','filaC info');
+      $("#actPkDeposito").prop('value',Aux[filaI].pk);
+      $("#actnroBoucher").prop('value',Aux[filaI].nroBoucher)
+      $("#actmonto").prop('value',Aux[filaI].monto);
+      $("#actconcepto").prop('value',Aux[filaI].concepto);
+    });
+    $("#btnRefrescar").click(function(){
+      ajax_depositos();
+    });
+
+   
+    ajax_depositos();
+    function ajax_depositos(){
+      $.ajax({
+        url:'/listado_depositos/',
+        data:{'pg':pagina,'pkGrifo':'{{pkGrifo}}','pkReporte':'{{pkR}}'},
+        type:'GET',
+        dataType:'json',
+        success: function(data){
+          Aux = data;
+          var html ="";
+          for(var i=0;i<data.length;i++){
+              html += '<tr data-toggle="modal" data-target="#myModal" class="filaC" id="'+i+'"><td>'+data[i].nroBoucher+'</td><td>'+data[i].reporte+'</td><td>'+data[i].monto +'</td><td>'+data[i].concepto+'</td></tr>';
+          }
+          $('#listaC').html(html);
+        }
+      });
+    }
+    // web services
+    //
+    $("#btn_eliminar").click(function(){
+      swal({
+        title: "Eliminar",
+        text: "Esta accion es irreversible",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonClass: 'btn-danger',
+        confirmButtonText: 'Eliminar',
+        closeOnConfirm: true,
+        //closeOnCancel: false
+        },
+        function(){
+          ajax_eliminar_deposito();
+        });
+    })
+    function ajax_eliminar_deposito(){
+      $.ajax({
+        url:'/eliminar_deposito_ajax/',
+        data:{'pk':$("#actPkDeposito").val()},
+        type:'GET',
+        dataType:'text',
+        success: function(data){
+          if(data=='exito'){
+            swal("Listo","Se elimino el registro", "success");
+            ajax_depositos();
+            $("#myModal").modal("hide");
+          }
+          else{
+            swal("ERROR",data, "error");
+            ajax_depositos();
+            $("#myModal").modal("hide");
+          }
+        }
+      });
+    }
+    //------------
+  });
+</script>
+{% endblock content1 %}

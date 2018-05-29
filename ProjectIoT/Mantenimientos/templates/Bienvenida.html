@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% block titulo %}
+  .::Configuracion Grifo
+{% endblock titulo %}
+{% block content1 %}
+    <div class="container">
+      <form action="/Cambiar_Estacion/" method="POST" data-toggle="validator" role="form"> {% csrf_token %}
+        <div class="row"><br><br><br><br></div>
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1 col-sm-12" >
+              <div class="panel panel-primary">
+                <div class="panel-heading" align="center"> <h5>SINAL DE DADOS</h5></div>
+                <div class="panel-body">
+                  <div class="row" id="Result">
+                    <div class="col-md-12">
+                      {% ifnotequal resultado '' %}
+                      {% ifequal resultado 'exito' %}
+                      <div class="alert alert-success" role="alert" align="center">
+                        <h4>OPERACION EXITOSA</h4>
+                      </div>
+                      {% else %}
+                      <div class="alert alert-danger" role="alert" align="center">
+                        <h4>ERROR {{resultado}}</h4>
+                      </div>
+                      {% endifequal %}
+                      {% endifnotequal %}
+                    </div>
+                  </div>
+<!--
+                  <div class="row">
+                    <div class="col-md-10 col-md-offset-1">
+                      <div class="panel panel-default">
+                        <div class="panel-body">
+                          <div class="row">
+                            <div class="col-md-12">
+                              <p class="bg-warning" align="center">
+                             
+                                <b>Seleccione <em></em>l Grifo</b>
+                              </p>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-3 col-md-offset-2" align="right">
+                              <h5>Grifo (Estacion)</h5>
+                            </div>
+                            <div class="col-md-4">               
+                              <div class="select">
+                                <select  name="estacion" id="txtEstacion" placeholder="Estacion"> 
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>  
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-4 col-md-offset-4 col-xs-4 col-xs-offset-4">
+                      <input class="btn btn-primary btn-block" type="submit" value="Guardar">
+                    </div>
+                  </div>
+-->
+                </div>
+              </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <script type="text/javascript">
+      $(document).ready(function () {
+        ajax_Estaciones()
+        function ajax_Estaciones(){
+          $.ajax({
+            url:'/listado_Estaciones/',
+            type:'GET',
+            dataType:'json',
+            success: function(data){
+              var html='';
+              for(var i=0;i<data.length;i++){
+                  html += '<option value="'+data[i].pk+'">'+data[i].nombre +'</option>';
+              }                        
+              $('#txtEstacion').html(html);
+              $('#txtEstacion').selectize();
+            }
+          });
+        };
+          
+
+      });
+    </script>
+{% endblock content1 %}

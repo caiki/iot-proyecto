@@ -1,0 +1,25 @@
+from django.conf.urls import patterns, url
+urlpatterns= patterns('Mantenimientos.views', 
+					  url(r'^auten/', 'autentificar', name="autentificar"),
+					  url(r'^inicio/', 'Inicio_view'),
+					  url(r'^AgregarHeart_ajax/', 'AgregarHeart_ajax_view'),
+					  url(r'^Bienvenida/', 'Bienvenida_view'),
+					  )
+"""
+url(r'^clientes/', 'Clientes_view'),
+url(r'^Mantenimientos_grifo/', 'Mantenimientos_grifo_view'),
+url(r'^AgregarEstacion_ajax/', 'AgregarEstacion_ajax_view'),
+url(r'^AgregarCombustible_ajax/', 'AgregarCombustible_ajax_view'),
+url(r'^AgregarSurtidor_ajax/', 'AgregarSurtidor_ajax_view'),
+url(r'^AgregarManguera_ajax/', 'AgregarManguera_ajax_view'),
+url(r'^AgregarPrecioComb_ajax/', 'AgregarPrecioComb_ajax_view'),
+url(r'^CambiarPrecioComb_ajax/', 'CambiarPrecioComb_ajax_view'),
+url(r'^AgregarTanque_ajax/', 'AgregarTanque_ajax_view'),
+url(r'^actulizar_cliente_ajax/', 'actulizar_cliente_ajax_view'),
+url(r'^actualizar_Estacion_ajax/', 'actualizar_Estacion_ajax_view'),
+url(r'^actualizar_Combustible_ajax/', 'actualizar_Combustible_ajax_view'),
+url(r'^actualizar_Surtidor_ajax/', 'actualizar_Surtidor_ajax_view'),
+url(r'^actualizar_Manguera_ajax/', 'actualizar_Manguera_ajax_view'),
+url(r'^actualizar_Tanque_ajax/', 'actualizar_Tanque_ajax_view'),
+url(r'^Cambiar_reporte_Anterior_ajax/', 'Cambiar_reporte_Anterior_ajax_view'),
+"""

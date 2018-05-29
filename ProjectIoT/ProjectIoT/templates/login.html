@@ -1,0 +1,168 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
+<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>
+      .:: Iniciar Sesión
+    </title>
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'Bootstrap/css/docs.min.css' %}" rel="stylesheet">
+    <link href="{% static 'Bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Bowlby+One" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Audiowide|Bowlby+One" rel="stylesheet">
+    <script src="{% static 'Bootstrap/js/ie-emulation-modes-warning.js' %}"></script>
+</head>
+<body class="bs-docs-home">
+    <style type="text/css">
+      body{
+        background-image: url("{% static 'img/grifo.jpg' %}");
+         -webkit-background-size: cover;
+          -moz-background-size: cover;
+          -o-background-size: cover;
+          background-size: cover;
+      }
+      .efecto{
+        /*background: #424242;*/
+       
+      }
+      .fondo{
+        background: #ffffff;
+        opacity: 0.8;
+      } 
+      #show-hide-passwd {
+      cursor: pointer;
+    }
+    </style>
+    <div class="bs-docs-header" style="background-color: #2C1A0C;background-image: -webkit-linear-gradient(top,#003b5c 0,#000000 100%);">
+      <div class="container">
+         <p><span style="font-size: 35px; color: #FE7E3E; font-family: 'Bowlby One', cursive;">MONITORING HEART RATE</span></p>
+      </div>
+    </div>
+    <div class="container">
+        <div class="row"><br></div>
+        <div class="row">
+          <div class="fondo col-md-4 col-md-offset-4 col-sm-12" >
+            <div class="row">
+              <div class="col-md-12" align="center">
+                <h1 style="font-family: 'Audiowide', cursive;">Iniciar Sesión</h1>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <!-- formulario de login-->
+                  <form class="form-horizontal" method="POST">{% csrf_token %}
+                    <div class="row" id="usua" style="background-color: #ECEFF1;  ">
+                      <P></P>
+                      <div class="col-md-12">
+                        <div class="form-group" >
+                          <!--
+                          <label for="usuario" class="col-sm-2 control-label">Usuario</label>-->
+
+                          <div class="col-sm-12">
+                            <div class="input-group">
+                              <span class="input-group-addon" style="font-size: 18px;">Email&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                              <input type="text" class="form-control" id="usuario" name="username" style="height: 45px;background-color: #FFF;font-size: 18px;" required>
+                            </div>
+                          </div>
+                        </div>
+                        <!--
+                        <hr style="color: #0056b2; background-color: #00897B; height: 4px;"/>-->
+                      </div>
+                    </div>
+                    <div class="row" id="pass" style="background-color: #ECEFF1;">
+                      <P></P>
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <div class="col-sm-12">
+                            <div class="input-group">
+                              <span class="input-group-addon" style="font-size: 18px;">Contraseña</span>
+                              <input type="password" class="form-control" id="password"  name="password" style="height: 45px;font-size: 18px;" required>
+                              <span id="show-hide-passwd" action="hide" class="input-group-addon glyphicon glyphicon glyphicon-eye-open"></span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row" style="background-color: #ECEFF1;">
+                      <p></p>
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <div class="col-sm-offset-3 col-md-6 col-xs-6 col-xs-offset-3">
+                            <button type="submit" class="btn btn-danger btn-block" id="btn" style="height: 45px; font-size: 20px;">Entrar</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                  <!-- //formulario de login-->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="{% static 'Bootstrap/js/jquery-1.11.3.min.js' %}"></script>
+    <script type="text/javascript">
+        $(document).on('ready', function() {
+          $("#usua")
+            .mouseover(function() {
+            $("#usua").css( "background-color", "#CFD8DC" );
+            })
+            .mouseleave(function() {
+              $("#usua").css( "background-color", "#ECEFF1" );
+            });
+            $("#usuario")
+            .focus(function() {
+            $("#usua").css( "background-color", "#CFD8DC" );
+            })
+            .focusout(function() {
+            $("#usua").css( "background-color", "#ECEFF1" );
+            });
+          $("#pass")
+            .mouseover(function() {
+            $("#pass").css( "background-color", "#CFD8DC" );
+            })
+            .mouseleave(function() {
+              $("#pass").css( "background-color", "#ECEFF1" );
+            });
+          $("#password")
+            .focus(function() {
+            $("#pass").css( "background-color", "#CFD8DC" );
+            })
+            .focusout(function() {
+              $("#pass").css( "background-color", "#ECEFF1" );
+            });
+          $('#show-hide-passwd')
+            .mouseup(function(e) {
+              e.preventDefault();
+               $(this).prev().attr('type','password');
+              $(this).removeClass('glyphicon-eye-close').addClass('glyphicon-eye-open').attr('action','hide');
+            })
+            .mousedown(function(e) {
+              e.preventDefault();
+              $(this).prev().attr('type','text');
+              $(this).removeClass('glyphicon-eye-open').addClass('glyphicon-eye-close').attr('action','show');
+            });
+          })
+    </script>
+    <script src="{% static 'Bootstrap/js/bootstrap.min.js' %}"></script>
+    <!--<script src="js/docs.min.js"></script>-->
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="{% static 'Bootstrap/js/ie10-viewport-bug-workaround.js' %}"></script>
+<footer class="bs-docs-footer" role="contentinfo">
+  <div class="container" align="center">
+    Copyright © 2017 
+  </div>
+</footer>
+</body>
+
+<!-- Mirrored from getbootstrap.com/ by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 31 May 2015 05:08:18 GMT -->
+</html>
