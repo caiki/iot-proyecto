@@ -30,6 +30,7 @@ urlpatterns= patterns('Consultas.views',
 					  url(r'^listado_descuentos_reporte/', 'listado_descuentos_reporte_view'),
 					  url(r'^listado_serafin_reporte/', 'listado_serafin_reporte_view'),
 					  url(r'^listado_movimientos_reporte/', 'listado_movimientos_reporte_view'),
+					  url(r'^listado_heart/', 'listado_heart_view'),
 					  #reportes mensuales
 					  url(r'^reporte_sa_compra_mes_ajax/', 'reporte_sa_compra_mes_ajax_view'),
 					  url(r'^reporte_creditos_mes_ajax/', 'reporte_creditos_mes_ajax_view'),

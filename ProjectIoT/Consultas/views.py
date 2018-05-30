@@ -478,6 +478,34 @@ def listado_depositos_view(request):
 	mimetype="application/json"
 	return HttpResponse(data,mimetype)
 
+def myconverter(o):
+    if isinstance(o, datetime.datetime):
+        return o.__str__()
+
+@login_required
+def listado_heart_view(request):
+	pg=request.GET.get('pg')
+	#pkGrifo=request.GET.get('pkGrifo')
+	#pkReporte=request.GET.get('pkReporte')
+	if request.is_ajax:
+		try:
+			consulta=list(THeart.objects.values('pk','FechaTiempo','Beat').reverse()[:20])
+			lista=[]
+			for obj in consulta:
+				dato={}
+				dato['pk']=obj['pk']
+				dato['FechaTiempo']=obj['FechaTiempo']
+				dato['Beat']=int(obj['Beat'])
+				lista.append(dato)
+				print(dato)
+			data= json.dumps(lista, default = myconverter)
+		except:
+			data='fail'+ str(sys.exc_info()[1])
+	else:
+		data='fail'
+	mimetype="application/json"
+	return HttpResponse(data,mimetype)
+
 @login_required
 def listado_pagos_view(request):
 	pg=request.GET.get('pg')

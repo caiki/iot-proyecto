@@ -24,11 +24,11 @@ import random
 @transaction.atomic
 def Depositos_view(request):
 	exito=''
-	pkR= request.POST.get('pkReporte','')
-	nroboucher= request.POST.get('nroBoucher','')
-	monto= request.POST.get('deposito','')
-	concepto= request.POST.get('concepto','')
-	obs=request.POST.get('obs','')
+	pkR= request.POST.get('pkHeart','')
+	nroboucher= request.POST.get('fechaTiempo','')
+	monto= request.POST.get('frecuenciaC','')
+	#concepto= request.POST.get('concepto','')
+	#obs=request.POST.get('obs','')
 	
 	try:
 		usr= request.user.username

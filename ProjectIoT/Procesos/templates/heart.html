@@ -60,6 +60,7 @@
                           <tr>
                             <th>DATETIME</th>
                             <th>BEAT</th>
+                            <th>RR INTERVALO</th>
                           </tr>
                         </thead>
                         <tbody id="listaC">
@@ -367,10 +368,11 @@
       $("#actconcepto").prop('value',Aux[filaI].concepto);
     });
     $("#btnRefrescar").click(function(){
-      ajax_depositos();
+      //ajax_depositos();
+      ajax_heart();
     });
 
-   
+/*   
     ajax_depositos();
     function ajax_depositos(){
       $.ajax({
@@ -388,6 +390,25 @@
         }
       });
     }
+*/
+    ajax_heart();
+    function ajax_heart(){
+      $.ajax({
+        url:'/listado_heart/',
+        data:{'pg':pagina},
+        type:'GET',
+        dataType:'json',
+        success: function(data){
+          Aux = data;
+          var html ="";
+          for(var i=0;i<data.length;i++){
+              html += '<tr data-toggle="modal" data-target="#myModal" class="filaC" id="'+i+'"><td>'+data[i].FechaTiempo+'</td><td>'+data[i].Beat+'</td></tr>';
+          }
+          $('#listaC').html(html);
+        }
+      });
+    }
+
     // web services
     //
     $("#btn_eliminar").click(function(){

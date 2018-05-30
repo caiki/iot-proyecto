@@ -2,6 +2,7 @@
 from django.db import models
 
 # Create your models here.
+
 class TTitular(models.Model):
     """docsrting for Cliente"""
     idTitular = models.AutoField("Id", primary_key=True)
@@ -30,21 +31,6 @@ class Grifo(models.Model):
 
     def __str__(self):
         return str(self.idGrifo)
-#----------------config inicio -------------------------------------
-
-class Inicio(models.Model):
-    """docsrting for Cliente"""
-    idInicio = models.AutoField("Id", primary_key=True)
-    Grifo=models.ForeignKey(Grifo,verbose_name='Id Grifo')#id grifo
-    aux1 = models.CharField("aux1:", max_length=20,blank= True, null=True)
-    aux2 = models.CharField("aux2:", max_length=20,blank= True, null=True)
-    class Meta:
-        ordering = ["idInicio"]
-        verbose_name_plural = "Inicios"
-        verbose_name = "Inicio"
-
-    def __str__(self):
-        return str(self.idInicio)
 
 #------------------------------------------------------------------
 class Surtidor(models.Model):
@@ -328,6 +314,22 @@ class TCompra(models.Model):
 
     def __str__(self):
         return str(self.idCompra)
+
+#----------------config inicio -------------------------------------
+
+class Inicio(models.Model):
+    """docsrting for Cliente"""
+    idInicio = models.AutoField("Id", primary_key=True)
+    Grifo=models.ForeignKey(Grifo,verbose_name='Id Grifo')#id grifo
+    aux1 = models.CharField("aux1:", max_length=20,blank= True, null=True)
+    aux2 = models.CharField("aux2:", max_length=20,blank= True, null=True)
+    class Meta:
+        ordering = ["idInicio"]
+        verbose_name_plural = "Inicios"
+        verbose_name = "Inicio"
+
+    def __str__(self):
+        return str(self.idInicio)
 
 #----------------------------------------------
 
