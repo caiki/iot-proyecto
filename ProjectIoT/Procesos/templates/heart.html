@@ -37,11 +37,11 @@
               <div class="col-md-2 col-md-offset-1">
                 <button type="button" class="btn btn-primary btn-block" id="btnRefrescar"><span class="fa fa-refresh"></span> Actualizar</button>
               </div>
-<!--
-              <div class="col-md-2 ">
-                <button type="button" class="btn btn-block btn-success" data-toggle="modal" data-target="#ModalDeposito"><i class="fa fa-lg fa-money"></i>Nuevo Deposito</button>
-              </div>
 
+              <div class="col-md-2 ">
+                <button type="button" class="btn btn-block btn-success" data-toggle="modal" data-target="#ModalDeposito"><i class="fa fa-lg fa-money"></i>Analizar - Dados</button>
+              </div>
+<!--
              <div class="col-md-2 col-md-offset-5" align="right">
                 <a href="/ImprimirReporte/" class="btn btn-warning" type="button">Vista Preliminar</a>
               </div>
@@ -60,7 +60,7 @@
                           <tr>
                             <th>DATETIME</th>
                             <th>BEAT</th>
-                            <th>RR INTERVALO</th>
+                            <!--<th>RR INTERVALO</th>-->
                           </tr>
                         </thead>
                         <tbody id="listaC">
@@ -190,7 +190,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="myModalLabel">Detalles</h4>
+          <h4 class="modal-title" id="myModalLabel">Diagnostico do paciente</h4>
         </div>
         <div class="modal-body">
           <form action="/Depositos/" method="POST" data-toggle="validator" role="form" id="formulario">
@@ -202,10 +202,26 @@
                         <div class="row">
                           <div class="col-md-12" >
 
+                        <div class="row">
+                          <div class="col-md-8 col-md-offset-2">
+                            <div class="form-group">
+                              <label class="control-label" for="txtnroBoucher">O paciente presenta:</label>
+                              <div class="input-group">
+                                <span class="input-group-addon">Diagnostico:&nbsp;&nbsp;</span>
+                                <input type="text" class="form-control" id="txtnroBoucher" name="nroBoucher" required>
+                              </div>
+                              
+                              <div class="form-control-feedback" style="text-align:left; top: 25px;right: 5px;" ></div>
+                              
+                            </div>
+                          </div>
+                       </div>
+
+<!--
                           <p class="bg-success">
                           Detalles de Deposito
                           </p>
-                          
+     
                         </div>
                         </div>
                         <div class="row">
@@ -213,6 +229,7 @@
                             <input type="text" class="form-control" name="pkReporte" value="{{ pkR }}" readonly="readonly">
                             <p></p>
                           </div>
+
                         </div>
                         <div class="row">
                           <div class="col-md-8 col-md-offset-2">
@@ -254,7 +271,7 @@
                             </div>
                           </div>
                        </div>  
-                       <!-- 
+                       
                        <div class="row">
                           <div class="col-md-8 col-md-offset-2">
                             <div class="form-group">
@@ -272,8 +289,10 @@
             </div>
             <div class="row">
               <div class="col-md-4 col-md-offset-4">
-                <button class="btn btn-success btn-block" type="submit" id="btn_guardar">Guardar</button>
+                <button type="button" class="btn btn-primary btn-block" id="btnTrain"><span class="fa fa-refresh"></span>Treinar</button>
+                <button type="button" class="btn btn-primary btn-block" id="btnAnalizar"><span class="fa fa-refresh"></span>Analizar</button>
               </div>
+
             </div>
           </form>
         </div>
@@ -291,6 +310,7 @@
   var filaI =0;
   var pagina=1;
   var aux_tipoCambio="";
+  var rdf = []
   $(document).ready(function () {
     $('input').on('keypress', function(e){
       if(e.keyCode == 13){
@@ -372,6 +392,18 @@
       ajax_heart();
     });
 
+    $("#btnAnalizar").click(function(){
+      //ajax_depositos();
+      ajax_analizar();
+    });
+
+    $("#btnTrain").click(function(){
+      //ajax_depositos();
+      ajax_analizar_rf_train();
+    });
+
+
+
 /*   
     ajax_depositos();
     function ajax_depositos(){
@@ -405,6 +437,63 @@
               html += '<tr data-toggle="modal" data-target="#myModal" class="filaC" id="'+i+'"><td>'+data[i].FechaTiempo+'</td><td>'+data[i].Beat+'</td></tr>';
           }
           $('#listaC').html(html);
+        }
+      });
+    }
+
+    
+    function ajax_analizar(){
+      $.ajax({
+        url:'/analizar_rf/',
+        data:{'pg':pagina},
+        type:'GET',
+        dataType:'json',
+        success: function(data){
+          rdf = data;
+          var count1= 0;
+          var count0= 0;
+          var prob_prom1 = 0.0;
+          var prob_prom0 = 0.0;
+          for(var i=0;i<data.length;i++){
+          //  for(var j=0;j<data[0].length;j++){
+            if(data[i][0]==1){
+                count1 = count1 + 1;
+                prob_prom1 = prob_prom1 + data[i][2];
+                //console.log(prob_prom1);
+            }
+          //}
+          }
+          prob_prom1 = prob_prom1/data.length;
+
+    if(count1>count0){
+        prob_prom1 = prob_prom1*100;   
+        $("#txtnroBoucher").prop('value',"Arritmia"+"( "+count1+" aciertos - Porcentaje:"+ prob_prom1 +"% )");
+    } else {
+        count0 = data.length - count1;
+        prob_prom0 = (1-prob_prom1)*100;  
+        $("#txtnroBoucher").prop('value',"Normal"+"("+count0+" aciertos - Porcentaje:"+ prob_prom0 +"% )");
+    }
+           
+        }
+      });
+    }
+    
+    function ajax_analizar_rf_train(){
+      $.ajax({
+        url:'/analizar_rf_train/',
+        data:{'pg':pagina},
+        type:'GET',
+        dataType:'json',
+        success: function(data){
+        /*Aux = data;
+          var html ="";
+          for(var i=0;i<data.length;i++){
+              html += '<tr data-toggle="modal" data-target="#myModal" class="filaC" id="'+i+'"><td>'+data[i].FechaTiempo+'</td><td>'+data[i].Beat+'</td></tr>';
+          }
+          $('#listaC').html(html);*/
+          rdf = data;
+
+          console.log(data)
         }
       });
     }
@@ -446,7 +535,7 @@
         }
       });
     }
-    //------------
+
   });
 </script>
 {% endblock content1 %}

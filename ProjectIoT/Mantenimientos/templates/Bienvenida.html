@@ -9,8 +9,14 @@
         <div class="row">
           <div class="col-md-10 col-md-offset-1 col-sm-12" >
               <div class="panel panel-primary">
-                <div class="panel-heading" align="center"> <h5>SINAL DE DADOS</h5></div>
+                <div class="panel-heading" align="center"> <h5>SINAL DE DADOS</h5>
+                <button type="button" class="btn btn-primary btn-block" id="btnRefrescar">
+                <span class="fa fa-refresh"></span> Actualizar</button>
+                </div>
                 <div class="panel-body">
+                  <div class="row" id="grafico">
+                    <canvas id="myChart"></canvas>
+                  <div>  
                   <div class="row" id="Result">
                     <div class="col-md-12">
                       {% ifnotequal resultado '' %}
@@ -67,25 +73,80 @@
       </form>
     </div>
     <script type="text/javascript">
-      $(document).ready(function () {
-        ajax_Estaciones()
-        function ajax_Estaciones(){
-          $.ajax({
-            url:'/listado_Estaciones/',
-            type:'GET',
-            dataType:'json',
-            success: function(data){
-              var html='';
-              for(var i=0;i<data.length;i++){
-                  html += '<option value="'+data[i].pk+'">'+data[i].nombre +'</option>';
-              }                        
-              $('#txtEstacion').html(html);
-              $('#txtEstacion').selectize();
-            }
-          });
-        };
-          
+      //-------------------------------------CHART-------------------------------------------    
+var a = 2;
 
-      });
-    </script>
+
+var ctx = document.getElementById('myChart').getContext('2d');
+var chart = new Chart(ctx, {
+  // The type of chart we want to create
+  type: 'line',
+  // The data for our dataset
+  data: {
+      labels: ["January", "February", "March", "April", "May", "June", "July"],
+      datasets: [{
+          label: "Heart Rate Variability",
+          backgroundColor: 'rgb(10, 134, 161)',
+          borderColor: 'rgb(0, 255, 255)',
+          data: [0, 10, 5, 2, 20, 30, 15],
+      }]
+  },
+  // Configuration options go here
+  options: {} });        
+
+//-------------------------------------------------------------------------------------
+function removeData(chart) {
+    chart.data.labels.pop();
+    chart.data.datasets.forEach((dataset) => {
+        dataset.data.pop();
+    });
+    chart.update();
+}
+
+function addData(chart, label, data) {
+    chart.data.labels.push(label);
+    chart.data.datasets.forEach((dataset) => {
+        dataset.data.push(data);
+    });
+    chart.update();
+}
+    var beats = [];
+    var labels = [];
+
+ajax_graf_heart(chart);
+function ajax_graf_heart(chart){
+    $.ajax({
+      url:'/listado_heart/',
+      data:{},
+      type:'GET',
+      dataType:'json',
+      success: function(data){
+        Aux = data;
+        for(var i=0;i<data.length;i++){
+            labels.push(data[i].pk);
+            beats.push(data[i].Beat); 
+        }
+        //$('#listaC').html(html);
+        console.log(labels);
+        console.log(beats);
+        tam = chart.data.labels.length
+for (i = 0; i < tam; i++) {
+    console.log(i);
+    removeData(chart);
+}
+for (i = beats.length-1; i >= 0 ; i--) {
+    addData(chart,labels[i],beats[i]);
+}
+    //addData(chart,labels,beats);
+      }
+    });
+}
+
+    $("#btnRefrescar").click(function(){
+          beats = []
+          labels = []
+          ajax_graf_heart(chart);
+    });
+
+</script>
 {% endblock content1 %}

@@ -17,6 +17,11 @@ import time
 import datetime
 import calendar
 from django.db.models import Q
+from sklearn import tree
+import pandas as pd
+import numpy as np
+# Load scikit's random forest classifier library
+from sklearn.ensemble import RandomForestClassifier
 
 @login_required
 def listado_Clientes_view(request):
@@ -149,48 +154,7 @@ def listado_Manhguera_view(request):
 		data='fail'
 	mimetype="application/json"
 	return HttpResponse(data,mimetype)
-"""
-@login_required
-def listado_Mangueras_tabla_view(request):
-	pkSurtidor=request.GET.get('surtidor')
-	pkReporte=request.GET.get('pkReporte')
-	if request.is_ajax:
-		try:
-			consulta=list(TManguera.objects.filter(Surtidor=pkSurtidor).values('pk','NombreManguera','Combustible'))
-			lista=[]
-			for obj in consulta:
-				dato={}
-				dato['pk']=obj['pk']
-				dato['nombre']=obj['NombreManguera']
-				precio= PrecioCombustible.objects.get(Combustible=obj['Combustible'],ReporteDiario=pkReporte)
-				dato['precio']= float(precio.PrecioActual)
-				dato['diaI']=''
-				if LecturaContometro.objects.filter(ReporteDiario__lt=pkReporte,Manguera=obj['pk']).exists():
-					Ulectura= LecturaContometro.objects.filter(ReporteDiario__lt=pkReporte,Manguera=obj['pk']).latest("pk")
-					dato['diaI']=float(Ulectura.ValorContometroFinal1)
-				
-				dato['diaI2']=''
-				if LecturaContometro.objects.filter(ReporteDiario__lt=pkReporte,Manguera=obj['pk']).exists():
-					Ulectura= LecturaContometro.objects.filter(ReporteDiario__lt=pkReporte,Manguera=obj['pk']).latest("pk")
-					dato['diaI2']=float(Ulectura.ValorContometroFinal2)
-				
-				dato['diaF']=''
-				dato['nocheF']=''
-				dato['pkLectura']=''
-				if LecturaContometro.objects.filter(ReporteDiario=pkReporte,Manguera=obj['pk']).exists():
-					lect= LecturaContometro.objects.get(ReporteDiario=pkReporte,Manguera=obj['pk'])
-					dato['diaF']=float(lect.ValorContometroFinal1)
-					dato['nocheF']=float(lect.ValorContometroFinal2)
-					dato['pkLectura']=lect.pk
-				lista.append(dato)
-			data= json.dumps(lista)
-		except:
-			data='fail'+ str(sys.exc_info()[1])
-	else:
-		data='fail'
-	mimetype="application/json"
-	return HttpResponse(data,mimetype)
-"""
+
 
 @login_required
 def listado_Mangueras_tabla_view(request):
@@ -471,34 +435,6 @@ def listado_depositos_view(request):
 				dato['monto']=round(float(obj['Monto']),2)
 				lista.append(dato)
 			data= json.dumps(lista)
-		except:
-			data='fail'+ str(sys.exc_info()[1])
-	else:
-		data='fail'
-	mimetype="application/json"
-	return HttpResponse(data,mimetype)
-
-def myconverter(o):
-    if isinstance(o, datetime.datetime):
-        return o.__str__()
-
-@login_required
-def listado_heart_view(request):
-	pg=request.GET.get('pg')
-	#pkGrifo=request.GET.get('pkGrifo')
-	#pkReporte=request.GET.get('pkReporte')
-	if request.is_ajax:
-		try:
-			consulta=list(THeart.objects.values('pk','FechaTiempo','Beat').reverse()[:20])
-			lista=[]
-			for obj in consulta:
-				dato={}
-				dato['pk']=obj['pk']
-				dato['FechaTiempo']=obj['FechaTiempo']
-				dato['Beat']=int(obj['Beat'])
-				lista.append(dato)
-				print(dato)
-			data= json.dumps(lista, default = myconverter)
 		except:
 			data='fail'+ str(sys.exc_info()[1])
 	else:
@@ -858,9 +794,6 @@ def listado_depositos_reporte_view(request):
 	mimetype="application/json"
 	return HttpResponse(data,mimetype)
 
-#<<<<<<< HEAD
-#def calcular_monto_contometro(pkCombustible,pkReporte,pkGrifo):
-#=======
 def calcular_monto_contometro(pkCombustible,pkReporte,pkGrifo,pkTanque):
 	total=0
 	total_dia=0
@@ -869,17 +802,7 @@ def calcular_monto_contometro(pkCombustible,pkReporte,pkGrifo,pkTanque):
 	p= PrecioCombustible.objects.get(Combustible=pkCombustible,ReporteDiario=pkReporte)
 	precio= float(p.PrecioActual)
 	consulta=list(TManguera.objects.filter(Surtidor__Grifo=pkGrifo,Combustible=pkCombustible,Tanque=pkTanque).values('pk','NombreManguera','Combustible'))
-	"""
-<<<<<<< HEAD
-	consulta=list(TManguera.objects.filter(Surtidor__Grifo=pkGrifo,Combustible=pkCombustible).values('pk','NombreManguera','Combustible'))
-=======
-	consulta=[]
-	if not TManguera.objects.filter(Surtidor__Grifo=pkGrifo,Combustible=pkCombustible,Tanqu=pkTanque).exists():
-		consulta=list(TManguera.objects.filter(Surtidor__Grifo=pkGrifo,Combustible=pkCombustible,Tanque="n").values('pk','NombreManguera','Combustible'))
-	else:
-		consulta=list(TManguera.objects.filter(Surtidor__Grifo=pkGrifo,Combustible=pkCombustible,Tanque=pkTanque).values('pk','NombreManguera','Combustible'))
->>>>>>> 371d9c22e7544096615209f22653858214f756b9
-	"""
+
 	for obj in consulta:
 		diai=''
 		diaf=''
@@ -899,47 +822,6 @@ def calcular_monto_contometro(pkCombustible,pkReporte,pkGrifo,pkTanque):
 			total_dia=total_dia+auxdia
 			total_noche=total_noche+auxnoche
 	return total,total_dia,total_noche
-
-"""  Tio Lucho
-#<<<<<<< HEAD
-#def calcular_monto_contometro(pkCombustible,pkReporte,pkGrifo):
-#=======
-def calcular_monto_contometro(pkCombustible,pkReporte,pkGrifo,pkTanque):
-	total=0
-	total_dia=0
-	total_noche=0
-	precio=0
-	p= PrecioCombustible.objects.get(Combustible=pkCombustible,ReporteDiario=pkReporte)
-	precio= float(p.PrecioActual)
-	consulta=list(TManguera.objects.filter(Surtidor__Grifo=pkGrifo,Combustible=pkCombustible,Tanque=pkTanque).values('pk','NombreManguera','Combustible'))
-
-	for obj in consulta:
-		diai=''
-		diaf=''
-		nochef=''
-		if LecturaContometro.objects.filter(ReporteDiario__lt=pkReporte,Manguera=obj['pk']).exists():
-			Ulectura= LecturaContometro.objects.filter(ReporteDiario__lt=pkReporte,Manguera=obj['pk']).latest("pk")
-			diai=float(Ulectura.ValorContometroFinal1)
-			diai2=float(Ulectura.ValorContometroFinal2)
-		if LecturaContometro.objects.filter(ReporteDiario=pkReporte,Manguera=obj['pk']).exists():
-			lect= LecturaContometro.objects.get(ReporteDiario=pkReporte,Manguera=obj['pk'])
-			diaf=float(lect.ValorContometroFinal1)
-			nochef=float(lect.ValorContometroFinal2)
-		if esReal(diai) and esReal(diaf) and esReal(nochef):
-			#auxto= (nochef - diai)*precio
-			#auxto= (diaf - diai)*precio
-			#auxdia= (diaf - diai)*precio
-			auxdia=(diaf - diai)*precio
-			#auxnoche= (nochef - diai2)*precio
-			auxnoche=(nochef - diai2)*precio
-			auxto= auxdia+auxnoche
-			#print(auxto/precio)
-			total=total+auxto
-			total_dia=0
-			#total_dia=total_dia+auxdia
-			total_noche=0
-	return total,total_dia,total_noche
-"""
 
 @login_required
 def Movimiento_vista_reporte_view(request):
@@ -1480,3 +1362,194 @@ def reporte_Pagos_mes_cliente_ajax_view(request):
 @login_required
 def listado_Pago_reporte_mes_view(request):
 	return render_to_response('reportePagos.html',context_instance=RequestContext(request))
+
+
+#-------------------------------------Nuevo-------------------------------------------
+def myconverter(o):
+    if isinstance(o, datetime.datetime):
+        return o.__str__()
+
+@login_required
+def listado_heart_view(request):
+	pg=request.GET.get('pg')
+	#pkGrifo=request.GET.get('pkGrifo')
+	#pkReporte=request.GET.get('pkReporte')
+	if request.is_ajax:
+		try:
+			consulta=list(THeart.objects.values('pk','FechaTiempo','Beat').reverse()[:20])
+			lista=[]
+			for obj in consulta:
+				dato={}
+				dato['pk']=obj['pk']
+				dato['FechaTiempo']=obj['FechaTiempo']
+				dato['Beat']=int(obj['Beat'])
+				lista.append(dato)
+				#print(dato)
+			data= json.dumps(lista, default = myconverter)
+		except:
+			data='fail'+ str(sys.exc_info()[1])
+	else:
+		data='fail'
+	mimetype="application/json"
+	return HttpResponse(data,mimetype)
+
+@login_required
+def read_data_ML(self):
+	pg=request.GET.get('pg')
+	if request.is_ajax:
+		try:
+			consulta=list(THeart.objects.values('pk','FechaTiempo','Beat').reverse()[:100])
+		except:
+			data='fail'+ str(sys.exc_info()[1])
+	else:
+		consulta = []
+	return consulta
+
+@login_required
+def analizar_rf_train_view(request):
+	pg=request.GET.get('pg')
+	#pkGrifo=request.GET.get('pkGrifo')
+	#pkReporte=request.GET.get('pkReporte')
+
+	if request.is_ajax:
+		try:
+			consulta=list(THeart.objects.values('Beat').reverse()[:100])
+			'''lista=[]
+			for obj in consulta:
+				dato={}
+				dato['Beat']=int(obj['Beat'])
+				lista.append(dato)
+				#print(dato)
+			#Lectura de la base de datos
+			print lista
+			df = pd.DataFrame(lista)
+			print df'''
+			#Lectura de archivo csv
+			# Create a dataframe with the four feature variables
+			df = pd.read_csv("DadosG.csv")
+			# View the top 5 rows
+			#print df
+			# Create a new column that for each row, generates a random number between 0 and 1, and
+			# if that value is less than or equal to .75, then sets the value of that cell as True
+			# and false otherwise. This is a quick and dirty way of randomly assigning some rows to
+			# be used as the training data and some as the test data.
+			df['is_train'] = np.random.uniform(0, 1, len(df)) <= .75
+			# Create two new dataframes, one with the training rows, one with the test rows
+			train, test = df[df['is_train']==True], df[df['is_train']==False]
+			#print train[['BPM','Edad','Estatura','Sexo','Peso']].head()
+			#print test[['BPM','Edad','Estatura','Sexo','Peso']].head()
+			# Show the number of observations for the test and training dataframes
+			print('Number of observations in the training data:', len(train))
+			print('Number of observations in the test data:',len(test))
+			# Create a list of the feature column's names
+			# features = df.columns[:4]
+			# features = ['BPM','Edad','Estatura','Sexo','Peso']
+			# print features
+			# train['species'] contains the actual species names. Before we can use it,
+			# we need to convert each species name into a digit. So, in this case there
+			# are two states, which have been coded as 0, 1.
+			y = pd.factorize(train['Estado'])[0]
+			#print y
+			# Create a random forest Classifier. By convention, clf means 'Classifier'
+			clf = RandomForestClassifier(n_jobs=2, random_state=0)
+			# Train the Classifier to take the training features and learn how they relate
+			# to the training y (the species)
+			#print train[['BPM','Edad','Estatura','Sexo','Peso']]
+			clf.fit(train[['BPM','Edad','Estatura','Sexo','Peso']], y)
+			# Apply the Classifier we trained to the test data (which, remember, it has never seen before)
+			predict = clf.predict(test[['BPM','Edad','Estatura','Sexo','Peso']])
+			# View the predicted probabilities of the first 10 observations
+			predict_prob = clf.predict_proba(test[['BPM','Edad','Estatura','Sexo','Peso']])
+			neto = np.column_stack((predict,predict_prob ))
+			print neto
+			
+			data= json.dumps(neto.tolist())
+			
+		except:
+			data='fail'+ str(sys.exc_info()[1])
+	else:
+		data='fail'
+	mimetype="application/json"
+	return HttpResponse(data,mimetype)
+
+@login_required
+def analizar_rf_view(request):
+	pg=request.GET.get('pg')
+	#pkGrifo=request.GET.get('pkGrifo')
+	#pkReporte=request.GET.get('pkReporte')
+	n = 50 # Tamanio de la consulta del dataframe
+	if request.is_ajax:
+		try:
+			consulta=list(THeart.objects.values('Beat').reverse()[:n])
+			lista=[]
+			for obj in consulta:
+				dato={}
+				dato['BPM']=int(obj['Beat'])
+				lista.append(dato)
+				#print(dato)
+			#Lectura de la base de datos
+			df1 = pd.DataFrame(lista)
+			#edad = np.full((n, 1), 28, dtype=int)
+			df1['Edad'] = 28
+			df1['Estatura'] = 169
+			df1['Sexo'] = 1
+			df1['Peso'] = 75
+			print("Data Predecir:")
+			print df1
+			#print join
+			#Lectura de archivo csv
+			# Create a dataframe with the four feature variables
+			df = pd.read_csv("DadosG.csv")
+			# View the top 5 rows
+			print("Data Train:")
+			print df.head()
+			# Create a new column that for each row, generates a random number between 0 and 1, and
+			# if that value is less than or equal to .75, then sets the value of that cell as True
+			# and false otherwise. This is a quick and dirty way of randomly assigning some rows to
+			# be used as the training data and some as the test data.
+			#      df['is_train'] = np.random.uniform(0, 1, len(df)) <= .75
+			# Create two new dataframes, one with the training rows, one with the test rows
+			#      train, test = df[df['is_train']==True], df[df['is_train']==False]
+			#print train[['BPM','Edad','Estatura','Sexo','Peso']].head()
+			#print test[['BPM','Edad','Estatura','Sexo','Peso']].head()
+			# Show the number of observations for the test and training dataframes
+			#      print('Number of observations in the training data:', len(train))
+			#      print('Number of observations in the test data:',len(test))
+			# Create a list of the feature column's names
+			# features = df.columns[:4]
+			# features = ['BPM','Edad','Estatura','Sexo','Peso']
+			# print features
+			# train['species'] contains the actual species names. Before we can use it,
+			# we need to convert each species name into a digit. So, in this case there
+			# are two states, which have been coded as 0, 1.
+			#      y = pd.factorize(train['Estado'])[0]
+			y = pd.factorize(df['Estado'])[0]
+			print("Estado Normal= 0 , Estado Arritmia = 1:")
+			print y
+			# Create a random forest Classifier. By convention, clf means 'Classifier'
+			clf = RandomForestClassifier(n_jobs=2, random_state=0)
+			# Train the Classifier to take the training features and learn how they relate
+			# to the training y (the species)
+			#print train[['BPM','Edad','Estatura','Sexo','Peso']]
+			clf.fit(df[['BPM','Edad','Estatura','Sexo','Peso']], y)
+			#clf.fit(train[['BPM','Edad','Estatura','Sexo','Peso']], y)
+			# Apply the Classifier we trained to the test data (which, remember, it has never seen before)
+			#predict = clf.predict(test[['BPM','Edad','Estatura','Sexo','Peso']])
+			predict = clf.predict(df1[['BPM','Edad','Estatura','Sexo','Peso']])
+			print("predict simple:")
+			print predict
+			# View the predicted probabilities of the first 10 observations
+			predict_prob = clf.predict_proba(df1[['BPM','Edad','Estatura','Sexo','Peso']])
+			print("predict_prob:")
+			print predict_prob
+			neto = np.column_stack((predict,predict_prob))
+			print("neto join:")
+			print neto
+
+			data= json.dumps(neto.tolist())
+		except:
+			data='fail'+ str(sys.exc_info()[1])
+	else:
+		data='fail'
+	mimetype="application/json"
+	return HttpResponse(data,mimetype)

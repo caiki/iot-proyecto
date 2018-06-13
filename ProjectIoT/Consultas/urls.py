@@ -31,6 +31,8 @@ urlpatterns= patterns('Consultas.views',
 					  url(r'^listado_serafin_reporte/', 'listado_serafin_reporte_view'),
 					  url(r'^listado_movimientos_reporte/', 'listado_movimientos_reporte_view'),
 					  url(r'^listado_heart/', 'listado_heart_view'),
+					  url(r'^analizar_rf/', 'analizar_rf_view'),
+					  url(r'^analizar_rf_train/', 'analizar_rf_train_view'),
 					  #reportes mensuales
 					  url(r'^reporte_sa_compra_mes_ajax/', 'reporte_sa_compra_mes_ajax_view'),
 					  url(r'^reporte_creditos_mes_ajax/', 'reporte_creditos_mes_ajax_view'),
@@ -48,4 +50,5 @@ urlpatterns= patterns('Consultas.views',
 					  url(r'^listado_pagos_mes_ajax/', 'listado_pagos_mes_view'),
 					  url(r'^reporte_Pagos_mes_cliente_ajax/', 'reporte_Pagos_mes_cliente_ajax_view'),
 					  url(r'^listado_Pago_reporte_mes/', 'listado_Pago_reporte_mes_view'),
+
 					  )

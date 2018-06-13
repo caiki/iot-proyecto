@@ -26,6 +26,8 @@
     <script data-jsfiddle="common" src="{% static 'Handson/js/moment.js' %}"></script>
     <script data-jsfiddle="common" src="{% static 'Handson/js/ZeroClipboard.js' %}"></script>
     <script data-jsfiddle="common" src="{% static 'Handson/js/handsontable.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+
     <!--<link data-jsfiddle="common" href="{% static 'Handson/css/handsontable.bootstrap.css' %}" rel="stylesheet">-->
     <link data-jsfiddle="common" href="{% static 'Handson/css/handsontable.css' %}" rel="stylesheet">
 </head>
@@ -40,7 +42,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a href="/Bienvenida/" class="navbar-brand">{{ grifo }}</a>
+          <a href="/Bienvenida/" class="navbar-brand">Inicio</a>
         </div>
         <nav class="collapse navbar-collapse bs-navbar-collapse">
           <ul class="nav navbar-nav navbar-left" >
@@ -72,7 +74,7 @@
     {% endblock content1 %}
 <footer class="bs-docs-footer" role="contentinfo">
   <div class="container" align="center">
-    Copyright © 2017 Todos los derechos reservados
+    Copyright © 2018 Todos los derechos reservados
     {{ fail }}
   </div>
 </footer>
