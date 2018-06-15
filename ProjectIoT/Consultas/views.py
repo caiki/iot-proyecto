@@ -17,11 +17,11 @@ import time
 import datetime
 import calendar
 from django.db.models import Q
-from sklearn import tree
-import pandas as pd
-import numpy as np
+#from sklearn import tree
+#import pandas as pd
+#import numpy as np
 # Load scikit's random forest classifier library
-from sklearn.ensemble import RandomForestClassifier
+#from sklearn.ensemble import RandomForestClassifier
 
 @login_required
 def listado_Clientes_view(request):
